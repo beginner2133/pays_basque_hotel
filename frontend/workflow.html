@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcours de Réservation - Logique Applicative</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+        .workflow-container {
+            width: 100%;
+            max-width: 1200px;
+        }
+        .step {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .step-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .step-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 25px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+        .column h3 {
+            color: #007bff;
+            margin-top: 0;
+            font-size: 1.1em;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .column h3 svg {
+            margin-right: 10px;
+        }
+        .column ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .column li {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .column code {
+            background-color: #e9ecef;
+            color: #c7254e;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #007bff;
+            margin: -20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Parcours de Réservation : de l'Utilisateur à la Base de Données</h1>
+
+    <div class="workflow-container">
+
+        <!-- ÉTAPE 1 -->
+        <div class="step">
+            <div class="step-header">Étape 1 : Recherche de Disponibilité</div>
+            <div class="step-body">
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Utilisateur (Front-end)
+                    </h3>
+                    <ul>
+                        <li>Choisit ses dates d'arrivée et de départ.</li>
+                        <li>Clique sur le bouton "Rechercher".</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 12H2.5"></path><path d="M16.5 17L21.5 12"></path><path d="M16.5 7L21.5 12"></path></svg>
+                        API (Back-end)
+                    </h3>
+                    <ul>
+                        <li>Reçoit la requête <code>GET /api/chambres</code> avec les dates.</li>
+                        <li>Demande à MongoDB les chambres déjà réservées.</li>
+                        <li>Demande à MongoDB les chambres disponibles.</li>
+                        <li>Calcule le prix selon la saison.</li>
+                        <li>Renvoie une liste JSON des chambres disponibles.</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Opérations MongoDB
+                    </h3>
+                    <ul>
+                        <li><code>db.reservations.find({ ... })</code></li>
+                        <li><code>db.chambres.find({ _id: { $nin: [...] } })</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">&darr;</div>
+
+        <!-- ÉTAPE 2 -->
+        <div class="step">
+            <div class="step-header">Étape 2 : Sélection et Remplissage des Informations</div>
+            <div class="step-body">
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Utilisateur (Front-end)
+                    </h3>
+                    <ul>
+                        <li>Choisit une chambre parmi la liste.</li>
+                        <li>Remplit le formulaire avec son nom et son email.</li>
+                        <li>Clique sur "Confirmer et Payer".</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 12H2.5"></path><path d="M16.5 17L21.5 12"></path><path d="M16.5 7L21.5 12"></path></svg>
+                        API (Back-end)
+                    </h3>
+                    <ul>
+                        <li>Reçoit la requête <code>POST /api/create-payment-intent</code>.</li>
+                        <li>Communique avec la passerelle de paiement (ex: Stripe) pour préparer la transaction.</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Opérations MongoDB
+                    </h3>
+                    <ul>
+                        <li>Aucune à ce stade. La réservation n'est pas encore créée.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">&darr;</div>
+
+        <!-- ÉTAPE 3 -->
+        <div class="step">
+            <div class="step-header">Étape 3 : Paiement et Création de la Réservation</div>
+            <div class="step-body">
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Utilisateur (Front-end)
+                    </h3>
+                    <ul>
+                        <li>Est redirigé vers la page de paiement sécurisée.</li>
+                        <li>Valide son paiement.</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 12H2.5"></path><path d="M16.5 17L21.5 12"></path><path d="M16.5 7L21.5 12"></path></svg>
+                        API (Back-end)
+                    </h3>
+                    <ul>
+                        <li>Reçoit la confirmation de paiement.</li>
+                        <li>**Action clé :** Crée un nouvel objet "réservation".</li>
+                        <li>Enregistre cet objet dans la base de données.</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Opérations MongoDB
+                    </h3>
+                    <ul>
+                        <li><code>db.reservations.insertOne({ ... })</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

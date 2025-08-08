@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Tests - Projet Hôtel Pays Basque</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+        .intro {
+            text-align: center;
+            font-size: 1.1em;
+            color: #6c757d;
+            margin-bottom: 50px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .test-case {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .test-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+        }
+        .test-header h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .test-header p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .test-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .test-section {
+            margin-bottom: 20px;
+        }
+        .test-section h3 {
+            font-size: 1em;
+            color: #007bff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .test-section h3 svg {
+            margin-right: 8px;
+        }
+        .test-section ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .test-section li, .test-section p {
+            margin-bottom: 5px;
+        }
+        .test-footer {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        .status.ok {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plan de Tests Manuels</h1>
+        <p class="intro">
+            Ce document décrit la stratégie de tests manuels mise en place pour valider le bon fonctionnement, la sécurité et la robustesse de l'application. Chaque cas de test est conçu pour vérifier une fonctionnalité clé et la compétence REAC associée.
+        </p>
+
+        <div class="test-grid">
+            <!-- Cas de Test 1 -->
+            <div class="test-case">
+                <div class="test-header">
+                    <h2>TEST-FT-01 : Affichage dynamique des chambres</h2>
+                    <p>Compétences REAC : CP4, CP7</p>
+                </div>
+                <div class="test-body">
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>Objectif (Le Pourquoi)</h3>
+                        <p>Vérifier que le front-end communique correctement avec l'API back-end pour récupérer et afficher la liste des chambres, démontrant une architecture découplée fonctionnelle.</p>
+                    </div>
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Procédure (Le Comment)</h3>
+                        <ol>
+                            <li>Lancer l'application avec <code>docker compose up</code>.</li>
+                            <li>Ouvrir un navigateur à l'adresse <code>http://localhost:8080</code>.</li>
+                            <li>Ouvrir l'inspecteur (F12) et aller dans l'onglet "Réseau".</li>
+                            <li>Observer la requête envoyée à <code>/api/chambres</code>.</li>
+                        </ol>
+                    </div>
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Résultat Attendu</h3>
+                        <p>La requête réseau doit avoir un statut 200 OK. La page doit afficher dynamiquement les cartes des différentes chambres avec leur nom et leur prix.</p>
+                    </div>
+                </div>
+                <div class="test-footer">
+                    <span>Statut du Test</span>
+                    <span class="status ok">OK</span>
+                </div>
+            </div>
+
+            <!-- Cas de Test 2 -->
+            <div class="test-case">
+                <div class="test-header">
+                    <h2>TEST-SEC-01 : Sécurité du mot de passe</h2>
+                    <p>Compétence REAC : CP7</p>
+                </div>
+                <div class="test-body">
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>Objectif (Le Pourquoi)</h3>
+                        <p>Valider que les mots de passe des utilisateurs ne sont jamais stockés en clair, mais sont systématiquement hachés par le back-end avant d'être enregistrés en base de données.</p>
+                    </div>
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Procédure (Le Comment)</h3>
+                        <ol>
+                            <li>Créer un utilisateur via l'API (ou un formulaire).</li>
+                            <li>Se connecter à la base de données avec MongoDB Compass.</li>
+                            <li>Naviguer jusqu'à la collection <code>users</code>.</li>
+                            <li>Inspecter le document du nouvel utilisateur créé.</li>
+                        </ol>
+                    </div>
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Résultat Attendu</h3>
+                        <p>Le champ <code>password</code> ne doit pas contenir le mot de passe en clair (ex: "password123"). Il doit contenir une longue chaîne de caractères hachée (ex: "pbkdf2:sha256:...").</p>
+                    </div>
+                </div>
+                <div class="test-footer">
+                    <span>Statut du Test</span>
+                    <span class="status ok">OK</span>
+                </div>
+            </div>
+
+            <!-- Cas de Test 3 -->
+            <div class="test-case">
+                <div class="test-header">
+                    <h2>TEST-INFRA-01 : Déploiement de l'environnement</h2>
+                    <p>Compétences REAC : CP1, CP8</p>
+                </div>
+                <div class="test-body">
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>Objectif (Le Pourquoi)</h3>
+                        <p>S'assurer que l'ensemble de l'infrastructure applicative (Nginx, Flask, MongoDB) peut être monté et détruit de manière fiable et reproductible avec une seule commande.</p>
+                    </div>
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Procédure (Le Comment)</h3>
+                        <ol>
+                            <li>Cloner le dépôt Git sur une machine propre.</li>
+                            <li>Exécuter la commande <code>docker compose up --build -d</code>.</li>
+                            <li>Vérifier que les 3 conteneurs sont bien en cours d'exécution.</li>
+                            <li>Exécuter la commande <code>docker compose down</code>.</li>
+                        </ol>
+                    </div>
+                    <div class="test-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Résultat Attendu</h3>
+                        <p>La première commande doit démarrer tous les services sans erreur. La seconde commande doit arrêter et supprimer tous les conteneurs proprement.</p>
+                    </div>
+                </div>
+                <div class="test-footer">
+                    <span>Statut du Test</span>
+                    <span class="status ok">OK</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

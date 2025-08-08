@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annexes Techniques - Projet Hôtel Pays Basque</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        h1 { text-align: center; font-size: 2.5em; margin-bottom: 40px; }
+        h2 { font-size: 2em; margin-top: 60px; }
+        h3 { font-size: 1.5em; margin-top: 40px; border-bottom-style: dashed; }
+        .annexe-item {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+            padding: 25px 30px;
+        }
+        .explanation-box {
+            background-color: #e9ecef;
+            border-left: 5px solid #007bff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .explanation-box p { margin: 5px 0; }
+        .explanation-box strong { color: #0056b3; }
+        pre {
+            background-color: #2c3e50;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        code { font-family: 'Courier New', Courier, monospace; }
+        .placeholder {
+            border: 2px dashed #6c757d;
+            padding: 50px;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chapitre 13 : Annexes</h1>
+
+        <!-- ==================== ANNEXE A ==================== -->
+        <h2>Annexe A : Conception et Modélisation</h2>
+        
+        <div class="annexe-item">
+            <h3>A.1 : Wireframe de l'Interface Utilisateur</h3>
+            <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour l'équipe projet (développeur, chef de projet) et le client.</p>
+                <p><strong>Pourquoi ?</strong> Pour valider la structure ergonomique et la disposition des éléments avant le développement. C'est la preuve de la compétence **CP2 : Maquetter des interfaces**.</p>
+                <p><strong>Comment ?</strong> Un schéma basse-fidélité représentant les blocs fonctionnels des pages clés.</p>
+            </div>
+            <div class="placeholder">
+                [Ici, insérer l'image de votre wireframe]
+            </div>
+        </div>
+
+        <div class="annexe-item">
+            <h3>A.2 : Modélisation de la Base de Données NoSQL</h3>
+            <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour les développeurs back-end et les administrateurs de bases de données.</p>
+                <p><strong>Pourquoi ?</strong> Pour définir la structure des données qui seront stockées et manipulées par l'application. C'est la preuve de la compétence **CP5 : Mettre en place une base de données**.</p>
+                <p><strong>Comment ?</strong> Un schéma visuel représentant les collections MongoDB et les champs qu'elles contiennent. Ce schéma a été réalisé manuellement pour illustrer la conception de la base de données.</p>
+            </div>
+            <div class="placeholder">
+                [Ici, insérer l'image de votre schéma de base de données, générée à partir du fichier schema.html]
+            </div>
+        </div>
+
+        <div class="annexe-item">
+            <h3>A.3 : Visualisation du Parcours de Réservation</h3>
+            <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour le jury et toute personne souhaitant comprendre la logique métier de l'application.</p>
+                <p><strong>Pourquoi ?</strong> Pour "décortiquer" et expliquer clairement comment les différents composants (front-end, back-end, base de données) interagissent pour accomplir une tâche complexe. C'est la preuve de la compétence **CP7 : Développer des composants métier**.</p>
+                <p><strong>Comment ?</strong> Une page web visuelle (`workflow.html`) qui représente le flux d'informations et les opérations à chaque étape du processus de réservation.</p>
+            </div>
+             <div class="placeholder">
+                [Ici, insérer une capture d'écran de votre page workflow.html]
+            </div>
+        </div>
+
+        <!-- ==================== ANNEXE B ==================== -->
+        <h2>Annexe B : Artefacts Techniques et Extraits de Code</h2>
+
+        <div class="annexe-item">
+            <h3>B.1 : Orchestration des Services avec Docker Compose</h3>
+            <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour les développeurs et les administrateurs système (DevOps).</p>
+                <p><strong>Pourquoi ?</strong> Pour définir et lancer l'intégralité de l'infrastructure multi-conteneurs avec une seule commande, garantissant un environnement reproductible. C'est la preuve des compétences **CP1 et CP8**.</p>
+                <p><strong>Comment ?</strong> Via le fichier `docker-compose.yml` qui est le "chef d'orchestre" de l'application.</p>
+            </div>
+            <pre><code># Fichier: /docker-compose.yml
+services:
+  nginx:
+    # ...
+  backend:
+    build: ./backend
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/hotel_pays_basque
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+# ...</code></pre>
+        </div>
+
+        <div class="annexe-item">
+            <h3>B.2 : Sécurisation des Mots de Passe</h3>
+             <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour les auditeurs de sécurité et les développeurs back-end.</p>
+                <p><strong>Pourquoi ?</strong> Pour prouver que l'application respecte les bonnes pratiques de sécurité fondamentales en ne stockant jamais de mots de passe en clair. C'est une preuve essentielle de la compétence **CP7**.</p>
+                <p><strong>Comment ?</strong> En utilisant la fonction `generate_password_hash` de la bibliothèque Werkzeug pour crypter le mot de passe avant son insertion en base de données.</p>
+            </div>
+            <pre><code># Fichier: /backend/app.py
+
+from werkzeug.security import generate_password_hash
+
+@app.route('/api/register', methods=['POST'])
+def register_user():
+    # ...
+    # On hache le mot de passe avant de le sauvegarder
+    hashed_password = generate_password_hash(data['password'])
+
+    # On insère le nouvel utilisateur dans la base de données
+    db.users.insert_one({
+        "username": data['username'],
+        "password": hashed_password
+    })
+    # ...</code></pre>
+        </div>
+
+        <!-- ==================== ANNEXE C ==================== -->
+        <h2>Annexe C : Plan de Tests et Conformité</h2>
+
+        <div class="annexe-item">
+            <h3>C.1 : Plan de Tests Manuels</h3>
+             <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour l'équipe d'assurance qualité et le jury.</p>
+                <p><strong>Pourquoi ?</strong> Pour démontrer qu'une stratégie de vérification a été mise en place pour s'assurer de la qualité et du bon fonctionnement de l'application. C'est la preuve des compétences **CP4, CP6 et CP7**.</p>
+                <p><strong>Comment ?</strong> Un document visuel (`tests.html`) présentant les cas de test critiques, leur procédure et leur résultat attendu.</p>
+            </div>
+             <div class="placeholder">
+                [Ici, insérer une capture d'écran de votre page tests.html]
+            </div>
+        </div>
+
+        <div class="annexe-item">
+            <h3>C.2 : Page de Conformité (CGU & RGPD)</h3>
+             <div class="explanation-box">
+                <p><strong>Pour qui ?</strong> Pour les utilisateurs finaux et les autorités de régulation.</p>
+                <p><strong>Pourquoi ?</strong> Pour informer les utilisateurs de leurs droits et des conditions d'utilisation du service, et pour démontrer la prise en compte du cadre légal européen (RGPD).</p>
+                <p><strong>Comment ?</strong> Une page HTML dédiée (`cgu.html`) contenant les mentions légales et la politique de confidentialité.</p>
+            </div>
+             <div class="placeholder">
+                [Ici, insérer une capture d'écran de votre page cgu.html]
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

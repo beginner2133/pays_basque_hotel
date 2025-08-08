@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schéma d'Architecture Technique - Projet Hôtel Pays Basque</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+        .architecture-flow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .component {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-top: 5px solid #007bff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            width: 250px;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 300px;
+        }
+        .component h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #0056b3;
+        }
+        .component p {
+            font-size: 0.9em;
+            color: #6c757d;
+            flex-grow: 1;
+        }
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+        .arrow {
+            font-size: 3em;
+            color: #007bff;
+            align-self: center;
+        }
+        .explanation {
+            margin-top: 50px;
+            background-color: #e9ecef;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+        }
+        .explanation h3 {
+            margin-top: 0;
+        }
+        code {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Schéma d'Architecture Technique</h1>
+
+        <div class="architecture-flow">
+            <div class="component">
+                <svg class="tech-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="1.5" y1="15" x2="22.5" y2="15"></line><line x1="1.5" y1="9" x2="22.5" y2="9"></line></svg>
+                <h2>Client (Navigateur)</h2>
+                <p>Point d'entrée de l'utilisateur. Il envoie des requêtes HTTP et affiche les pages HTML, CSS et JavaScript.</p>
+            </div>
+
+            <div class="arrow">&rarr;</div>
+
+            <div class="component">
+                <svg class="tech-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="10" y1="6" x2="10.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line><line x1="10" y1="18" x2="10.01" y2="18"></line></svg>
+                <h2>Serveur Nginx (Docker)</h2>
+                <p>Reverse Proxy. Il reçoit toutes les requêtes. Il sert directement les fichiers statiques (front-end) et redirige les appels API vers le service back-end.</p>
+            </div>
+
+            <div class="arrow">&harr;</div>
+
+            <div class="component">
+                <svg class="tech-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                <h2>Application Flask (Docker)</h2>
+                <p>Le cœur de l'application. Reçoit les requêtes de Nginx, applique la logique métier et communique avec la base de données pour lire ou écrire des informations.</p>
+            </div>
+
+            <div class="arrow">&harr;</div>
+
+            <div class="component">
+                <svg class="tech-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                <h2>Base de Données MongoDB (Docker)</h2>
+                <p>Le système de stockage. Elle conserve toutes les données de l'application (chambres, utilisateurs, réservations) de manière persistante.</p>
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h3>Explication de la "Machinerie"</h3>
+            <p>
+                Ce schéma illustre une architecture **multi-conteneurs découplée**, orchestrée par <code>docker-compose.yml</code>.
+            </p>
+            <ul>
+                <li><strong>Découplage :</strong> Chaque service (Nginx, Flask, MongoDB) vit dans son propre conteneur isolé. On peut mettre à jour, redémarrer ou remplacer un service sans affecter les autres. C'est un gage de robustesse et de maintenabilité.</li>
+                <li><strong>Sécurité :</strong> La base de données n'est pas accessible depuis l'extérieur. Seul le conteneur du back-end peut lui parler, via un réseau Docker privé. Nginx agit comme un bouclier, filtrant les requêtes.</li>
+                <li><strong>Performance :</strong> Nginx, spécialisé dans le service de fichiers statiques, gère le trafic client efficacement, laissant l'application Flask se concentrer sur sa tâche principale : la logique métier.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

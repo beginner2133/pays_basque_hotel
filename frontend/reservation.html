@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation - Hôtel du Pays Basque</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body id="page-reservation">
+    <div class="top-bar">
+         <div class="container">
+            <div class="lang-selector">
+                <a href="#" class="active">FR</a> | <a href="#">EN</a>
+            </div>
+        </div>
+    </div>
+    <header>
+        <nav>
+            <a href="index.html" class="brand">Hôtel du Pays Basque</a>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="reservation.html" class="active">Chambres & Réservation</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- ÉTAPE 1: Formulaire de dates -->
+        <section id="date-selection" class="form-step">
+            <h2>1. Choisissez vos dates pour voir nos disponibilités et tarifs</h2>
+            <div class="form-layout date-form">
+                <div class="form-group">
+                    <label for="checkin">Date d'arrivée</label>
+                    <input type="date" id="checkin">
+                </div>
+                <div class="form-group">
+                    <label for="checkout">Date de départ</label>
+                    <input type="date" id="checkout">
+                </div>
+                <button id="search-rooms-btn" class="btn">Voir les chambres disponibles</button>
+            </div>
+        </section>
+
+        <!-- ÉTAPE 2: Affichage des chambres -->
+        <section id="room-selection" class="form-step" style="display:none;">
+            <h2>2. Sélectionnez votre chambre</h2>
+            <div id="room-container" class="grid"></div>
+        </section>
+
+        <!-- ÉTAPE 3: Paiement -->
+        <section id="payment-step" class="form-step" style="display:none;">
+            <h2>3. Finalisez votre réservation</h2>
+            <div id="payment-summary"></div>
+            <div class="form-layout" id="stripe-form">
+                <p><strong>Simulation de paiement sécurisé</strong></p>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Numéro de carte</label>
+                    <input type="text" value="4242 4242 4242 4242" readonly>
+                </div>
+                <button id="pay-btn">Payer et Confirmer</button>
+                <div id="payment-status" class="form-message"></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+            </div>
+            <p>© 2025 Hôtel du Pays Basque. Design & Elégance.</p>
+        </div>
+    </footer>
+    <script src="assets/script.js"></script>
+</body>
+</html>

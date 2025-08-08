@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modélisation de la Base de Données - Le Pays Basque Hôtel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .schema-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .collection {
+            background-color: #ffffff;
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+            overflow: hidden;
+        }
+        .collection-header {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .collection-body {
+            padding: 20px;
+        }
+        .field {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .field:last-child {
+            border-bottom: none;
+        }
+        .field-name {
+            font-weight: 600;
+        }
+        .field-type {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .field-note {
+            font-size: 0.8em;
+            color: #95a5a6;
+            margin-left: 10px;
+        }
+        .embedded-doc {
+            border-left: 3px solid #3498db;
+            margin-left: 20px;
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Modélisation de la Base de Données NoSQL (MongoDB)</h1>
+
+    <div class="schema-container">
+
+        <!-- Collection : chambres -->
+        <div class="collection">
+            <div class="collection-header">Collection : chambres</div>
+            <div class="collection-body">
+                <div class="field">
+                    <span class="field-name">_id</span>
+                    <span class="field-type">ObjectId</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">nom</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">prix_basse</span>
+                    <span class="field-type">Number</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">prix_haute</span>
+                    <span class="field-type">Number</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">image</span>
+                    <span class="field-type">String <span class="field-note">(URL)</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collection : users -->
+        <div class="collection">
+            <div class="collection-header">Collection : users</div>
+            <div class="collection-body">
+                <div class="field">
+                    <span class="field-name">_id</span>
+                    <span class="field-type">ObjectId</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">username</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">password</span>
+                    <span class="field-type">String <span class="field-note">(Haché)</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collection : blog -->
+        <div class="collection">
+            <div class="collection-header">Collection : blog</div>
+            <div class="collection-body">
+                <div class="field">
+                    <span class="field-name">_id</span>
+                    <span class="field-type">ObjectId</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">titre</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">contenu</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">image</span>
+                    <span class="field-type">String <span class="field-note">(URL)</span></span>
+                </div>
+                <div class="field">
+                    <span class="field-name">commentaires</span>
+                    <span class="field-type">Array</span>
+                </div>
+                <div class="embedded-doc">
+                    <div class="field">
+                        <span class="field-name">auteur</span>
+                        <span class="field-type">String</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">contenu</span>
+                        <span class="field-type">String</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collection : reservations -->
+        <div class="collection">
+            <div class="collection-header">Collection : reservations</div>
+            <div class="collection-body">
+                <div class="field">
+                    <span class="field-name">_id</span>
+                    <span class="field-type">ObjectId</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">id_chambre</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">date_arrivee</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">date_depart</span>
+                    <span class="field-type">String</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">nom_client</span>
+                    <span class="field-type">String</span>
+                </div>
+                 <div class="field">
+                    <span class="field-name">email_client</span>
+                    <span class="field-type">String</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
